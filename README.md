@@ -66,17 +66,22 @@ The Room Booking and Management System is a web application built using the MERN
 
 ## Setup and Installation
 
-Create a .env file in the root
+    ```bash
+      Create a .env file in the root
 
-NODE_ENV="development"
-PORT=8000
-DATABASE_URL=mongodb+srv://
-BCRYPT_SALT_ROUNDS=13
-JWT_SECRET=SECRET
-JWT_REFRESH_SECRET=SECRET
+      NODE_ENV="development"
+      PORT=8000
+      DATABASE_URL=mongodb+srv://
+      BCRYPT_SALT_ROUNDS=13
+      JWT_SECRET=SECRET
+      JWT_REFRESH_SECRET=SECRET
+
+    ````
 
 ## Start the Backend Server
 
-cd server
-npm install
-npm run dev
+      ```bash
+      cd server
+      npm install
+      npm run dev
+      ````
