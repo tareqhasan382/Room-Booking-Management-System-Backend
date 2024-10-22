@@ -84,8 +84,24 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     res.status(500).json({ status: false, message: "Something went wrong" });
   }
 });
+const totalUser = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const totalUser = await UserModel.find();
 
+      res.status(201).json({
+        success: true,
+        statusCode: 200,
+        message: "User registered successfully",
+        data: totalUser,
+      });
+    } catch (error) {
+      res.status(500).json({ status: false, message: "Something went wrong" });
+    }
+  }
+);
 export const UserController = {
   createUser,
   loginUser,
+  totalUser,
 };

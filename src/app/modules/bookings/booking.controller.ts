@@ -80,6 +80,7 @@ const userByBook = catchAsync(
           message: "Unauthorized: No user found in request headers.",
         });
       }
+      console.log("user:", user);
       const count = await BookModel.countDocuments({ userId: user.userId });
       const result = await BookModel.find({ userId: user.userId })
         .populate("userId")
@@ -111,6 +112,28 @@ const SignleBook = catchAsync(
         statusCode: 200,
         message: "Booking retrieved successfully",
         data: result,
+      });
+    } catch (error) {
+      res.status(500).json({ status: false, message: "Something went wrong" });
+    }
+  }
+);
+const TotalBook = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const total = await BookModel.countDocuments();
+      const result = await BookModel.find()
+        .populate("userId")
+        .populate("roomId");
+      if (!result) {
+        res.status(404).json({ success: false, message: "Booking not found" });
+        return;
+      }
+      res.status(200).json({
+        success: true,
+        statusCode: 200,
+        message: "Booking retrieved successfully",
+        data: { result, total },
       });
     } catch (error) {
       res.status(500).json({ status: false, message: "Something went wrong" });
@@ -164,9 +187,11 @@ const SignleBook = catchAsync(
 //     }
 //   }
 // );
+
 export const BookController = {
   createBook,
   Books,
   userByBook,
   SignleBook,
+  TotalBook,
 };

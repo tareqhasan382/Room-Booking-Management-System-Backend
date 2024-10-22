@@ -6,7 +6,9 @@ const createRoom = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = await req.body;
+      // console.log("data:", data);
       const result = await RoomModel.create(data);
+      // console.log("result:", result);
       res.status(201).json({
         success: true,
         statusCode: 200,
@@ -129,6 +131,29 @@ const DeleteRoom = catchAsync(
     }
   }
 );
+const TotalRoom = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const total = await RoomModel.countDocuments();
+      const result = await RoomModel.find();
+      if (!result) {
+        res.status(404).json({ success: false, message: "Room not found" });
+        return;
+      }
+      res.status(201).json({
+        success: true,
+        statusCode: 200,
+        message: "Room retrive successfully",
+        data: {
+          result,
+          total,
+        },
+      });
+    } catch (error) {
+      res.status(500).json({ status: false, message: "Something went wrong" });
+    }
+  }
+);
 export const RoomController = {
   createRoom,
   Rooms,
@@ -136,4 +161,5 @@ export const RoomController = {
   updateRoomAvailability,
   UpdateRoom,
   DeleteRoom,
+  TotalRoom,
 };

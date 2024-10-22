@@ -9,7 +9,7 @@ import { RoomRoute } from "./app/modules/rooms/room.route";
 import { BookRoute } from "./app/modules/bookings/booking.route";
 
 const corsOptions = {
-  origin: ["*", "http://localhost:3000"],
+  origin: ["*", "http://localhost:3000", "http://localhost:5173"],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
@@ -34,14 +34,12 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.message || "Something went wrong";
 
-  // Split the error message by slash ('/') and check if it produces an array with more than one element
   const errorMessageParts = errorMessage.split("/");
   const messageAfterSlash =
     errorMessageParts.length > 1 ? errorMessageParts[1].trim() : errorMessage;
 
   const stack = err.stack || "";
 
-  // Split the stack trace by slash ('/') and check if it produces an array with more than one element
   const stackAfterSlash =
     stack.split("/").length > 1 ? stack.split("/")[1].trim() : stack;
 

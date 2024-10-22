@@ -12,5 +12,5 @@ router.get(
   authVerify(USER_Role.ADMIN, USER_Role.USER),
   BookController.userByBook
 );
-
+router.get("/total-book", BookController.TotalBook);
 export const BookRoute = router;

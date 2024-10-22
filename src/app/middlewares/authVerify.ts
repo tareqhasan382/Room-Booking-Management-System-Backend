@@ -9,7 +9,7 @@ export const authVerify =
     try {
       const token = req.headers.authorization;
       // console.log("token:", req.headers);
-      // console.log("token:", token);
+       console.log("token:", token);
       if (!token) {
         return res
           .status(httpStatus.UNAUTHORIZED)
