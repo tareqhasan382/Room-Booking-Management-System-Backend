@@ -9,7 +9,12 @@ import { RoomRoute } from "./app/modules/rooms/room.route";
 import { BookRoute } from "./app/modules/bookings/booking.route";
 
 const corsOptions = {
-  origin: ["*", "http://localhost:3000", "http://localhost:5173"],
+  origin: [
+    "*",
+    "http://localhost:3000",
+    "http://localhost:5173",
+    "https://room-booking-management-system-admin.vercel.app",
+  ],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
