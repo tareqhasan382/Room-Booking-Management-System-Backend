@@ -73,8 +73,17 @@ const Books = catchAsync(
 const userByBook = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const count = await BookModel.countDocuments();
-      const result = await BookModel.find();
+      const user = req.user;
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          message: "Unauthorized: No user found in request headers.",
+        });
+      }
+      const count = await BookModel.countDocuments({ userId: user.userId });
+      const result = await BookModel.find({ userId: user.userId })
+        .populate("userId")
+        .populate("roomId");
       res.status(201).json({
         success: true,
         statusCode: 200,

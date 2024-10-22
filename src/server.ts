@@ -1,10 +1,9 @@
-import { Server } from "http";
-import config from "./config";
-import app from "./app";
 import mongoose from "mongoose";
+import app from "./app";
+import config from "./config";
+import { Server } from "http";
 
-const PORT = 3000;
-//uncaught Exception handle
+//=======uncaught Exception handle=======
 process.on("uncaughtException", (error) => {
   console.log(error);
   process.exit(1);
@@ -13,9 +12,10 @@ let server: Server;
 async function main() {
   try {
     await mongoose.connect(config.database_url as string);
-    console.log(`Database is connected successfully🚀`);
+    console.log(`Database is connected successfully`);
 
     server = app.listen(config.port, () => {
+      // console.log(`Application app listening on port ${config.port}`);
       console.log(`Server is running on http://localhost:${config.port}`);
     });
   } catch (error) {
