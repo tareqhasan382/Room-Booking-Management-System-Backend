@@ -9,7 +9,7 @@ const createUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = await req.body;
-      // console.log("data:", data);
+      // console.log(" req create user data:", data);
       const existUser = await UserModel.findOne({ email: data.email });
       // console.log("existUser:", existUser);
       if (existUser) {
@@ -41,6 +41,7 @@ const createUser = catchAsync(
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   try {
     const data = req.body;
+    // console.log(" req login user data:", data);
     const existUser = await UserModel.findOne({ email: data.email }).select(
       "email password role name phone address"
     );

@@ -4,4 +4,5 @@ export type IRoom = {
   rent: number;
   facilities: string[];
   picture: string;
+  unavailableDates: Date[];
 };

@@ -18,6 +18,7 @@ const userSchema = new Schema<IRoom>(
       type: String, // URL the picture
       required: true,
     },
+    unavailableDates: { type: [Date] },
   },
   { timestamps: true }
 );

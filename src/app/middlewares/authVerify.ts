@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import httpStatus from "http-status-codes";
 import jwt, { JwtPayload, Secret } from "jsonwebtoken";
 import config from "../../config";
 
@@ -11,12 +10,10 @@ export const authVerify =
       const token = req.headers.authorization;
       // console.log("token:", token);
       if (!token) {
-        return res
-          .status(httpStatus.UNAUTHORIZED)
-          .json("You Are Not Authorized");
+        return res.status(401).json("You Are Not Authorized");
       }
       if (!token) {
-        return res.status(httpStatus.UNAUTHORIZED).json("Token not found");
+        return res.status(401).json("Token not found");
       }
 
       // Verify the token
@@ -29,7 +26,7 @@ export const authVerify =
       const { role } = verifiedUser;
       if (roles.length && !roles.includes(role)) {
         return res
-          .status(httpStatus.FORBIDDEN)
+          .status(403)
           .json("You are not authorized to access this route");
       }
 
@@ -38,13 +35,11 @@ export const authVerify =
       console.error("JWT Verification Error:", error);
 
       if (error === "TokenExpiredError") {
-        return res.status(httpStatus.UNAUTHORIZED).json("Token has expired");
+        return res.status(403).json("Token has expired");
       } else if (error === "JsonWebTokenError") {
-        return res.status(httpStatus.UNAUTHORIZED).json("Invalid token");
+        return res.status(401).json("Invalid token");
       } else {
-        return res
-          .status(httpStatus.INTERNAL_SERVER_ERROR)
-          .json("An error occurred");
+        return res.status(500).json("An error occurred");
       }
     }
   };

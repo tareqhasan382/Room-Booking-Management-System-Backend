@@ -62,6 +62,26 @@ const SignleRoom = catchAsync(
     }
   }
 );
+const updateRoomAvailability = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await RoomModel.updateOne(
+        { _id: req.params.id },
+        {
+          $push: {
+            "roomNumbers.$.unavailableDates": req.body.dates,
+          },
+        }
+      );
+      res.status(200).json("Room status has been updated.");
+    } catch (err: any) {
+      res.status(500).json({
+        status: false,
+        message: "Something went wrong",
+      });
+    }
+  }
+);
 const UpdateRoom = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -113,6 +133,7 @@ export const RoomController = {
   createRoom,
   Rooms,
   SignleRoom,
+  updateRoomAvailability,
   UpdateRoom,
   DeleteRoom,
 };
